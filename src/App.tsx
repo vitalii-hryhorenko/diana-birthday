@@ -1,20 +1,14 @@
 // App.tsx
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './App.less';
 
 const App: React.FC = () => {
-    const section1Ref = useRef<HTMLElement | null>(null);
-    const section2Ref = useRef<HTMLElement | null>(null);
-    const section3Ref = useRef<HTMLElement | null>(null);
-    const section4Ref = useRef<HTMLElement | null>(null);
-    const section5Ref = useRef<HTMLElement | null>(null);
-
-    const sectionRefs = [section1Ref, section2Ref, section3Ref, section4Ref, section5Ref];
+    const sectionRefs = useRef<(HTMLElement | null)[]>([]);
     const [popupImage, setPopupImage] = useState<string | null>(null);
     const [popupVisible, setPopupVisible] = useState(false);
 
     const scrollToSection = (index: number) => {
-        sectionRefs[index]?.current?.scrollIntoView({ behavior: 'smooth' });
+        sectionRefs.current[index]?.scrollIntoView({ behavior: 'smooth' });
     };
 
     const togglePopup = (image?: string) => {
@@ -46,20 +40,30 @@ const App: React.FC = () => {
             confetti.className = 'confetti';
             confetti.style.left = `${Math.random() * 100}%`;
             confetti.style.animationDelay = `${Math.random() * 2}s`;
+            confetti.style.setProperty('--i', Math.random().toString());
             confettiContainer.appendChild(confetti);
         }
 
         setTimeout(() => {
-            document.body.removeChild(confettiContainer);
+            confettiContainer.classList.add('fade-out');
+            setTimeout(() => {
+                document.body.removeChild(confettiContainer);
+            }, 1000);
         }, 4000);
+    }, []);
+
+    const nextButtonCallback = useCallback((numberOfSection: number) => {
+        return <button className="scroll-button" onClick={ () => scrollToSection(numberOfSection) }>
+            Давай далі ⬇️
+        </button>;
     }, []);
 
     return (
         <div className="App">
-            {[...Array(5)].map((_, i) => (
+            { [...Array(5)].map((_, i) => (
                 <section
-                    key={i}
-                    ref={sectionRefs[i]}
+                    key={ i }
+                    ref={ (el) => void (sectionRefs.current[i] = el) }
                     className={`section section-${i + 1}`}
                 >
                     {i === 0 && (
@@ -69,11 +73,16 @@ const App: React.FC = () => {
                                 Кицюня, З Днем Народження!
                                 <span role="img" aria-label="sparkles">🎉</span>
                             </h2>
-                            <button className="scroll-button" onClick={() => scrollToSection(i + 1)}>
-                                Давай далі ⬇️
-                            </button>
+                            { nextButtonCallback(i + 1) }
                         </>
                     )}
+
+                    { i === 1 && (
+                        <>
+                            <h2>Секція 2</h2>
+                            { nextButtonCallback(i + 1) }
+                        </>
+                    ) }
 
                     {i === 2 && (
                         <>
@@ -88,6 +97,7 @@ const App: React.FC = () => {
                                     </div>
                                 ))}
                             </div>
+                            { nextButtonCallback(i + 1) }
                         </>
                     )}
 
@@ -97,17 +107,15 @@ const App: React.FC = () => {
                             <button className="gift-button" onClick={() => togglePopup('/assets/images/gift.jpg')}>
                                 Подивитися що там 🎁
                             </button>
+                            { nextButtonCallback(i + 1) }
                         </>
                     )}
 
-                    {[1, 4].includes(i) && (
+                    { i === 4 && (
                         <>
-                            <h2>Секція {i + 1}</h2>
-                            <button className="scroll-button" onClick={() => scrollToSection(i + 1)}>
-                                Давай далі ⬇️
-                            </button>
+                            <h2>Секція 5</h2>
                         </>
-                    )}
+                    ) }
                 </section>
             ))}
 
