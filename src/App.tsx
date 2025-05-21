@@ -34,9 +34,13 @@ const App: React.FC = () => {
     };
 
     const nextButtonCallback = useCallback((numberOfSection: number) => {
-        return <button className="scroll-button" onClick={ () => scrollToSection(numberOfSection) }>
-            Давай далі ⬇️
-        </button>;
+        return (
+            <div className="scroll-button-container">
+                <button className="scroll-button" onClick={() => scrollToSection(numberOfSection)}>
+                    Давай далі ⬇️
+                </button>
+            </div>
+        );
     }, []);
 
     useEffect(() => {
@@ -72,83 +76,86 @@ const App: React.FC = () => {
 
     return (
         <div className="App">
-            { [...Array(5)].map((_, i) => (
+            {[...Array(5)].map((_, i) => (
                 <section
-                    key={ i }
-                    ref={ (el) => void (sectionRefs.current[i] = el) }
-                    className={ `section section-${ i + 1 }` }
+                    key={i}
+                    ref={(el) => void (sectionRefs.current[i] = el)}
+                    className={`section section-${i + 1}`}
                 >
-                    { i === 0 && (
-                        <>
-                            <div className="text-box">
-                                <div className="title">
-                                    <div>Кицюня, З Днем Народження!</div>
-                                </div>
-                            </div>
-                            { nextButtonCallback(i + 1) }
-                        </>
-                    ) }
-
-                    { i === 1 && (
-                        <>
-                            <h2>Секція 2</h2>
-                            { nextButtonCallback(i + 1) }
-                        </>
-                    ) }
-
-                    { i === 2 && (
-                        <>
-                            <h2>
-                                <span className="icon">📷</span>
-                                Моменти разом
-                            </h2>
-                            <div className="gallery">
-                                { IMAGES.map((img, index) => (
-                                    <div className="thumb" key={ index } onClick={ () => togglePopup(img.src) }>
-                                        <img src={ img.src } alt={ `Момент ${ index + 1 }` }/>
+                    <div className="section-content">
+                        {i === 0 && (
+                            <>
+                                <div className="text-box">
+                                    <div className="title">
+                                        <div>Кицюня, З Днем Народження!</div>
                                     </div>
-                                )) }
-                            </div>
-                            { nextButtonCallback(i + 1) }
-                        </>
-                    ) }
+                                </div>
+                            </>
+                        )}
 
-                    { i === 3 && (
-                        <>
-                            <h2>А це твій подарунок</h2>
-                            <button className="gift-button" onClick={ () => togglePopup('/assets/images/gift.jpg') }>
-                                Подивитися що там 🎁
-                            </button>
-                            { nextButtonCallback(i + 1) }
-                        </>
-                    ) }
+                        {i === 1 && (
+                            <>
+                                <h2>Секція 2</h2>
+                            </>
+                        )}
 
-                    { i === 4 && (
-                        <>
-                            <h2>Секція 5</h2>
-                        </>
-                    ) }
+                        {i === 2 && (
+                            <>
+                                <h2>
+                                    <span className="icon">📷</span>
+                                    Моменти разом
+                                </h2>
+                                <div className="gallery">
+                                    {IMAGES.map((img, index) => (
+                                        <div className="thumb" key={index} onClick={() => togglePopup(img.src)}>
+                                            <img src={img.src} alt={`Момент ${index + 1}`} />
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                        )}
+
+                        {i === 3 && (
+                            <>
+                                <h2>А це твій подарунок</h2>
+                                <button className="gift-button" onClick={() => togglePopup('/assets/images/gift.jpg')}>
+                                    Подивитися що там 🎁
+                                </button>
+                            </>
+                        )}
+
+                        {i === 4 && (
+                            <>
+                                <h2>Секція 5</h2>
+                            </>
+                        )}
+                    </div>
+
+                    {i < 4 && nextButtonCallback(i + 1)}
                 </section>
-            )) }
+            ))}
 
-            { popupImage && (
-                <div className={ `popup ${ !popupVisible ? 'hide' : '' }` } onClick={ () => togglePopup() }>
-                    <img src={ popupImage } alt="Popup"/>
+            {popupImage && (
+                <div className={`popup ${!popupVisible ? 'hide' : ''}`} onClick={() => togglePopup()}>
+                    <img src={popupImage} alt="Popup" />
                 </div>
-            ) }
+            )}
 
-            <button className="music-button" onClick={ () => {
-                if (audioRef.current) {
-                    if (isPlaying) {
-                        audioRef.current.pause();
-                        setIsPlaying(false);
-                    } else {
-                        audioRef.current.play();
-                        setIsPlaying(true);
+            <button
+                className="music-button"
+                onClick={() => {
+                    if (audioRef.current) {
+                        if (isPlaying) {
+                            audioRef.current.pause();
+                            setIsPlaying(false);
+                        } else {
+                            audioRef.current.play();
+                            setIsPlaying(true);
+                        }
                     }
-                }
-            } }>
-                { isPlaying ? '🔇' : '🎵' }
+                }}
+            >
+                {isPlaying ? '🔇' : '🎵'}
             </button>
         </div>
     );
