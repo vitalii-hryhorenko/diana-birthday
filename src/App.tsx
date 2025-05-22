@@ -37,7 +37,7 @@ const App: React.FC = () => {
     const nextButtonCallback = useCallback((numberOfSection: number) => {
         return (
             <div className="section__scroll-button-container">
-                <button className="button button--scroll" onClick={() => scrollToSection(numberOfSection)}>
+                <button className="button button--scroll" onClick={ () => scrollToSection(numberOfSection) }>
                     See what’s next
                 </button>
             </div>
@@ -52,8 +52,8 @@ const App: React.FC = () => {
         for (let i = 0; i < 80; i++) {
             const confetti = document.createElement('div');
             confetti.className = 'confetti';
-            confetti.style.left = `${Math.random() * 100}%`;
-            confetti.style.animationDelay = `${Math.random() * 2}s`;
+            confetti.style.left = `${ Math.random() * 100 }%`;
+            confetti.style.animationDelay = `${ Math.random() * 2 }s`;
             confetti.style.setProperty('--i', Math.random().toString());
             confettiContainer.appendChild(confetti);
         }
@@ -77,70 +77,77 @@ const App: React.FC = () => {
 
     return (
         <div className="App">
-            {[...Array(5)].map((_, i) => (
+            { [...Array(5)].map((_, i) => (
                 <section
-                    key={i}
-                    ref={(el) => void (sectionRefs.current[i] = el)}
-                    className={`section section-${i + 1}`}
+                    key={ i }
+                    ref={ (el) => void (sectionRefs.current[i] = el) }
+                    className={ `section section-${ i + 1 }` }
                 >
                     <div className="section__content">
-                        {i === 1 && (
+                        { i === 1 && (
                             <div className="box text-box">
                                 <div className="text-box__text">
-                                    Три роки тому цей день був для мене звичайним весняним днем: щебетали пташки, у саду розцвітали яблуні, а в чистому небі сяяло сонце, зігріваючи повітря своїми променями. Та справжнє тепло я відчув лише тоді, коли зустрів тебе. Відтоді в моєму житті з’явилося більше світла, радості й любові. Я неймовірно вдячний, що саме так склалися обставини — і вони привели мене до тебе. Кицюнь, я неймовірно тебе кохаю. Дякую що ти в мене є.
+                                    Три роки тому цей день був для мене звичайним весняним днем: щебетали пташки, у саду
+                                    розцвітали яблуні, а в чистому небі сяяло сонце, зігріваючи повітря своїми
+                                    променями. Та справжнє тепло я відчув лише тоді, коли зустрів тебе. Відтоді в моєму
+                                    житті з’явилося більше світла, радості й любові. Я неймовірно вдячний, що саме так
+                                    склалися обставини — і вони привели мене до тебе. Кицюнь, я неймовірно тебе кохаю.
+                                    Дякую що ти в мене є.
                                 </div>
                             </div>
-                        )}
+                        ) }
 
-                        {i === 2 && (
+                        { i === 2 && (
                             <>
                                 <h2 className="section__title">
                                     <span className="icon">📷</span> Моменти разом
                                 </h2>
                                 <div className="gallery">
-                                    {IMAGES.map((img, index) => (
-                                        <div className="gallery__thumb" key={index} onClick={() => togglePopup(img.src)}>
-                                            <img src={img.src} alt={`Момент ${index + 1}`} />
+                                    { IMAGES.map((img, index) => (
+                                        <div className="gallery__thumb" key={ index }
+                                             onClick={ () => togglePopup(img.src) }>
+                                            <img src={ img.src } alt={ `Момент ${ index + 1 }` }/>
                                         </div>
-                                    ))}
+                                    )) }
                                 </div>
                             </>
-                        )}
+                        ) }
 
-                        {i === 3 && (
+                        { i === 3 && (
                             <>
                                 <h2 className="section__title">А це твій подарунок</h2>
-                                <button className="button button--gift" onClick={() => togglePopup('/assets/images/gift.jpg')}>
+                                <button className="button button--gift"
+                                        onClick={ () => togglePopup('/assets/images/gift.jpg') }>
                                     Подивитися що там 🎁
                                 </button>
                             </>
-                        )}
+                        ) }
 
-                        {i === 4 && (
+                        { i === 4 && (
                             <>
                                 <h2 className="section__title">Секція 5</h2>
                             </>
-                        )}
+                        ) }
                     </div>
 
-                    {i < 4 && nextButtonCallback(i + 1)}
+                    { i < 4 && nextButtonCallback(i + 1) }
                 </section>
-            ))}
+            )) }
 
-            {popupImage && (
-                <div className={`popup ${!popupVisible ? 'popup--hide' : ''}`} onClick={() => togglePopup()}>
-                    <img src={popupImage} alt="Popup" />
+            { popupImage && (
+                <div className={ `popup ${ !popupVisible ? 'popup--hide' : '' }` } onClick={ () => togglePopup() }>
+                    <img src={ popupImage } alt="Popup"/>
                 </div>
-            )}
+            ) }
 
             <div className="music">
-                <div className={`music__tip ${showTip ? 'music__tip--show' : ''}`}>
+                <div className={ `music__tip ${ showTip ? 'music__tip--show' : '' }` }>
                     <div className="music__tip-text">Alright, turn on the music and let's see what's going on here</div>
-                    <img className="music__tip-arrow" src="/assets/images/arrows/arrow-1.png" />
+                    <img className="music__tip-arrow" src="/assets/images/arrows/arrow-1.png"/>
                 </div>
                 <button
                     className="music__button"
-                    onClick={() => {
+                    onClick={ () => {
                         setShowTip(false);
                         if (audioRef.current) {
                             if (isPlaying) {
@@ -151,9 +158,9 @@ const App: React.FC = () => {
                                 setIsPlaying(true);
                             }
                         }
-                    }}
+                    } }
                 >
-                    {isPlaying ? '🔇' : '🎵'}
+                    { isPlaying ? '🔇' : '🎵' }
                 </button>
             </div>
         </div>
