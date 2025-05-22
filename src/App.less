@@ -1,6 +1,6 @@
-@pink-light: #fce4ec;
-@pink-mid: #f8bbd0;
-@pink-strong: #f48fb1;
+@pink-light: #fde9f1;
+@pink-mid: rgba(250, 208, 234, 0.8);
+@pink-strong: #d882ff;
 
 * {
     margin: 0;
@@ -41,31 +41,32 @@ html, body {
 }
 
 .section-1 {
-    position: relative;
-    background-image: url("../public/assets/images/background/background-1.jpg");
+    background-image: url("../public/assets/images/background/background-2.png");
+    background-color: #fff1c5;
     background-attachment: fixed;
-    background-position: 50% 0;
-    background-size: cover;
-    z-index: -2;
-    overflow: hidden;
-
-    &::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background-color: rgba(255, 255, 255, 0.25);
-        z-index: -1;
-    }
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: min(80vh, 100%);
 }
-.section-2 { background: white; }
+.section-2 { background: @pink-light; }
 .section-3 { background: @pink-mid; }
 .section-4 { background: white; }
 .section-5 { background: @pink-light; }
 
-.text-box {
-    background: rgba(246, 220, 235, 0.9);
+.box {
     padding: 10px;
     border-radius: 10px;
+    max-width: 600px;
+}
+
+.text-box {
+    background: rgba(255, 245, 253, 0.7);
+
+
+    .text {
+        font-size: 24px;
+        line-height: 1em;
+    }
 }
 
 .title {
@@ -82,33 +83,59 @@ html, body {
     }
 }
 
-.music-button {
+.music-container {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: @pink-strong;
-    color: white;
-    font-size: 24px;
-    border: none;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    z-index: 1001;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.3s;
 
-    &:hover {
-        background: darken(@pink-strong, 10%);
+    .music-tip {
+        position: absolute;
+        bottom: 40px;
+        right: 30px;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+
+        &__show {
+            opacity: 1;
+        }
+
+        .music-tip__text {
+            position: absolute;
+            bottom: 65px;
+            right: 50px;
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 1em;
+            width: 200px;
+            padding: 5px;
+            border-radius: 10px;
+            background-color: rgba(250, 245, 250, 0.7);
+        }
+
+        .music-tip__arrow {
+            height: 60px;
+        }
     }
 
-    @media (max-width: 480px) {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
+    .music-button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: @pink-strong;
+        color: white;
+        font-size: 24px;
+        border: none;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        z-index: 1001;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s;
+
+        &:hover {
+            background: darken(@pink-strong, 10%);
+        }
     }
 }
 
@@ -118,18 +145,14 @@ html, body {
     background: @pink-strong;
     border: none;
     border-radius: 25px;
-    color: white;
+    font-weight: 600;
+    color: #fffed1;
     font-size: 16px;
     cursor: pointer;
     transition: transform 0.3s, background 0.3s;
     display: flex;
     align-items: center;
     gap: 8px;
-
-    @media (max-width: 480px) {
-        font-size: 14px;
-        padding: 8px 16px;
-    }
 }
 
 .scroll-button:hover,

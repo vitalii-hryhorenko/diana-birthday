@@ -15,6 +15,7 @@ const App: React.FC = () => {
     const sectionRefs = useRef<(HTMLElement | null)[]>([]);
     const [popupImage, setPopupImage] = useState<string | null>(null);
     const [popupVisible, setPopupVisible] = useState(false);
+    const [showTip, setShowTip] = useState<boolean>(true);
 
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -37,7 +38,7 @@ const App: React.FC = () => {
         return (
             <div className="scroll-button-container">
                 <button className="scroll-button" onClick={() => scrollToSection(numberOfSection)}>
-                    Давай далі ⬇️
+                    See what’s next
                 </button>
             </div>
         );
@@ -83,20 +84,12 @@ const App: React.FC = () => {
                     className={`section section-${i + 1}`}
                 >
                     <div className="section-content">
-                        {i === 0 && (
-                            <>
-                                <div className="text-box">
-                                    <div className="title">
-                                        <div>Кицюня, З Днем Народження!</div>
-                                    </div>
-                                </div>
-                            </>
-                        )}
-
                         {i === 1 && (
-                            <>
-                                <h2>Секція 2</h2>
-                            </>
+                            <div>
+                                <div className="text-box box">
+                                    <div className="text">Три роки тому цей день був для мене звичайним весняним днем: щебетали пташки, у саду розцвітали яблуні, а в чистому небі сяяло сонце, зігріваючи повітря своїми променями. Та справжнє тепло я відчув лише тоді, коли зустрів тебе. Відтоді в моєму житті з’явилося більше світла, радості й любові. Я неймовірно вдячний, що саме так склалися обставини — і вони привели мене до тебе. Кицюнь, я неймовірно тебе кохаю. Дякую що ти в мене є.</div>
+                                </div>
+                            </div>
                         )}
 
                         {i === 2 && (
@@ -141,22 +134,29 @@ const App: React.FC = () => {
                 </div>
             )}
 
-            <button
-                className="music-button"
-                onClick={() => {
-                    if (audioRef.current) {
-                        if (isPlaying) {
-                            audioRef.current.pause();
-                            setIsPlaying(false);
-                        } else {
-                            audioRef.current.play();
-                            setIsPlaying(true);
+            <div className="music-container">
+                <div className={`music-tip ${showTip && `music-tip__show`}`}>
+                    <div className="music-tip__text">Alright, turn on the music and let's see what's going on here</div>
+                    <img className="music-tip__arrow" src="/assets/images/arrows/arrow-1.png"/>
+                </div>
+                <button
+                    className="music-button"
+                    onClick={ () => {
+                        setShowTip(false);
+                        if (audioRef.current) {
+                            if (isPlaying) {
+                                audioRef.current.pause();
+                                setIsPlaying(false);
+                            } else {
+                                audioRef.current.play();
+                                setIsPlaying(true);
+                            }
                         }
-                    }
-                }}
-            >
-                {isPlaying ? '🔇' : '🎵'}
-            </button>
+                    } }
+                >
+                    { isPlaying ? '🔇' : '🎵' }
+                </button>
+            </div>
         </div>
     );
 };
