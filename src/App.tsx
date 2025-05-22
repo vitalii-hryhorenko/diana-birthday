@@ -36,8 +36,8 @@ const App: React.FC = () => {
 
     const nextButtonCallback = useCallback((numberOfSection: number) => {
         return (
-            <div className="scroll-button-container">
-                <button className="scroll-button" onClick={() => scrollToSection(numberOfSection)}>
+            <div className="section__scroll-button-container">
+                <button className="button button--scroll" onClick={() => scrollToSection(numberOfSection)}>
                     See what’s next
                 </button>
             </div>
@@ -83,24 +83,23 @@ const App: React.FC = () => {
                     ref={(el) => void (sectionRefs.current[i] = el)}
                     className={`section section-${i + 1}`}
                 >
-                    <div className="section-content">
+                    <div className="section__content">
                         {i === 1 && (
-                            <div>
-                                <div className="text-box box">
-                                    <div className="text">Три роки тому цей день був для мене звичайним весняним днем: щебетали пташки, у саду розцвітали яблуні, а в чистому небі сяяло сонце, зігріваючи повітря своїми променями. Та справжнє тепло я відчув лише тоді, коли зустрів тебе. Відтоді в моєму житті з’явилося більше світла, радості й любові. Я неймовірно вдячний, що саме так склалися обставини — і вони привели мене до тебе. Кицюнь, я неймовірно тебе кохаю. Дякую що ти в мене є.</div>
+                            <div className="box text-box">
+                                <div className="text-box__text">
+                                    Три роки тому цей день був для мене звичайним весняним днем: щебетали пташки, у саду розцвітали яблуні, а в чистому небі сяяло сонце, зігріваючи повітря своїми променями. Та справжнє тепло я відчув лише тоді, коли зустрів тебе. Відтоді в моєму житті з’явилося більше світла, радості й любові. Я неймовірно вдячний, що саме так склалися обставини — і вони привели мене до тебе. Кицюнь, я неймовірно тебе кохаю. Дякую що ти в мене є.
                                 </div>
                             </div>
                         )}
 
                         {i === 2 && (
                             <>
-                                <h2>
-                                    <span className="icon">📷</span>
-                                    Моменти разом
+                                <h2 className="section__title">
+                                    <span className="icon">📷</span> Моменти разом
                                 </h2>
                                 <div className="gallery">
                                     {IMAGES.map((img, index) => (
-                                        <div className="thumb" key={index} onClick={() => togglePopup(img.src)}>
+                                        <div className="gallery__thumb" key={index} onClick={() => togglePopup(img.src)}>
                                             <img src={img.src} alt={`Момент ${index + 1}`} />
                                         </div>
                                     ))}
@@ -110,8 +109,8 @@ const App: React.FC = () => {
 
                         {i === 3 && (
                             <>
-                                <h2>А це твій подарунок</h2>
-                                <button className="gift-button" onClick={() => togglePopup('/assets/images/gift.jpg')}>
+                                <h2 className="section__title">А це твій подарунок</h2>
+                                <button className="button button--gift" onClick={() => togglePopup('/assets/images/gift.jpg')}>
                                     Подивитися що там 🎁
                                 </button>
                             </>
@@ -119,7 +118,7 @@ const App: React.FC = () => {
 
                         {i === 4 && (
                             <>
-                                <h2>Секція 5</h2>
+                                <h2 className="section__title">Секція 5</h2>
                             </>
                         )}
                     </div>
@@ -129,19 +128,19 @@ const App: React.FC = () => {
             ))}
 
             {popupImage && (
-                <div className={`popup ${!popupVisible ? 'hide' : ''}`} onClick={() => togglePopup()}>
+                <div className={`popup ${!popupVisible ? 'popup--hide' : ''}`} onClick={() => togglePopup()}>
                     <img src={popupImage} alt="Popup" />
                 </div>
             )}
 
-            <div className="music-container">
-                <div className={`music-tip ${showTip && `music-tip__show`}`}>
-                    <div className="music-tip__text">Alright, turn on the music and let's see what's going on here</div>
-                    <img className="music-tip__arrow" src="/assets/images/arrows/arrow-1.png"/>
+            <div className="music">
+                <div className={`music__tip ${showTip ? 'music__tip--show' : ''}`}>
+                    <div className="music__tip-text">Alright, turn on the music and let's see what's going on here</div>
+                    <img className="music__tip-arrow" src="/assets/images/arrows/arrow-1.png" />
                 </div>
                 <button
-                    className="music-button"
-                    onClick={ () => {
+                    className="music__button"
+                    onClick={() => {
                         setShowTip(false);
                         if (audioRef.current) {
                             if (isPlaying) {
@@ -152,9 +151,9 @@ const App: React.FC = () => {
                                 setIsPlaying(true);
                             }
                         }
-                    } }
+                    }}
                 >
-                    { isPlaying ? '🔇' : '🎵' }
+                    {isPlaying ? '🔇' : '🎵'}
                 </button>
             </div>
         </div>
