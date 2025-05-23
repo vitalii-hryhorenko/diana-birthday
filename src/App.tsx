@@ -16,6 +16,7 @@ const App: React.FC = () => {
     const [popupImage, setPopupImage] = useState<string | null>(null);
     const [popupVisible, setPopupVisible] = useState(false);
     const [showTip, setShowTip] = useState<boolean>(true);
+    const [showJoke, setShowJoke] = useState<boolean>(false);
 
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -77,7 +78,7 @@ const App: React.FC = () => {
 
     return (
         <div className="App">
-            { [...Array(5)].map((_, i) => (
+            { [...Array(9)].map((_, i) => (
                 <section
                     key={ i }
                     ref={ (el) => void (sectionRefs.current[i] = el) }
@@ -85,19 +86,98 @@ const App: React.FC = () => {
                 >
                     <div className="section__content">
                         { i === 1 && (
-                            <div className="box text-box">
-                                <div className="text-box__text">
-                                    Три роки тому цей день був для мене звичайним весняним днем: щебетали пташки, у саду
-                                    розцвітали яблуні, а в чистому небі сяяло сонце, зігріваючи повітря своїми
-                                    променями. Та справжнє тепло я відчув лише тоді, коли зустрів тебе. Відтоді в моєму
-                                    житті з’явилося більше світла, радості й любові. Я неймовірно вдячний, що саме так
-                                    склалися обставини — і вони привели мене до тебе. Кицюнь, я неймовірно тебе кохаю.
-                                    Дякую що ти в мене є.
+                            <>
+                                <div className="box text-box">
+                                    <div className="text-box__text">
+                                        Три роки тому цей день був для мене звичайним весняним днем: щебетали пташки, у
+                                        саду
+                                        розцвітали яблуні, а в чистому небі сяяло сонце, зігріваючи повітря своїми
+                                        променями.
+                                    </div>
                                 </div>
-                            </div>
+                            </>
                         ) }
 
                         { i === 2 && (
+                            <>
+                                <div className="box text-box">
+                                    <div className="text-box__text">
+                                        Та справжнє тепло я відчув лише тоді, коли зустрів тебе. Відтоді в
+                                        моєму житті з’явилося більше світла, радості й любові.
+                                        Я неймовірно вдячний, що саме так склалися обставини — і вони привели мене до
+                                        тебе.
+                                    </div>
+                                </div>
+                                <div className="image-wrapper">
+                                    <img
+                                        src="/assets/images/diana/diana-1.jpg"
+                                        alt="Теплі спогади"
+                                        className="image-section"
+                                    />
+                                </div>
+                            </>
+                        ) }
+
+                        { i === 3 && (
+                            <>
+                                <div className="box text-box">
+                                    <div className="text-box__text">
+                                        Я ще ніколи не зустрічав таких світлих і життєрадісних людей, як ти.
+                                        Людей, чий внутрішній світ переливається всіма барвами так яскраво, що навіть
+                                        сонце здається тьмяним.
+                                    </div>
+                                </div>
+                                <div className="image-wrapper">
+                                    <img
+                                        src="/assets/images/diana/diana-2.jpg"
+                                        alt="Теплі спогади"
+                                        className="image-section"
+                                    />
+                                </div>
+                            </>
+                        ) }
+
+                        { i === 4 && (
+                            <>
+                                <div className="box text-box">
+                                    <div className="text-box__text">
+                                        Впевнений, що жодні труднощі, з якими ти стикаєшся, не здатні затьмарити те
+                                        світло і тепло, яке ти випромінюєш.
+                                    </div>
+                                </div>
+                                <div className="image-wrapper">
+                                    <img
+                                        src="/assets/images/diana/diana-3.jpg"
+                                        alt="Теплі спогади"
+                                        className="image-section"
+                                    />
+                                </div>
+                            </>
+                        ) }
+
+                        { i === 5 && (
+                            <>
+                                <div className="box text-box">
+                                    <div className="text-box__text">
+                                        Сьогодні особливий день - твій день народження.
+                                        Це той момент, коли бажання набувають особливої сили й здатні здійснитися навіть
+                                        тоді, коли здається неможливо.
+                                        І я тобі бажаю завжди вірити в себе, ніколи не зупинятися і слухати своє серце.
+                                        А я, як і завжди, буду поруч — підтримувати, надихати та підтримувати будь-які
+                                        твої скажені ідеї.
+                                    </div>
+                                </div>
+                                <div className="image-wrapper">
+                                    <img
+                                        src="/assets/images/diana/diana-4.jpg"
+                                        alt="Теплі спогади"
+                                        className="image-section"
+                                    />
+                                </div>
+                            </>
+                        ) }
+
+                        { i === 6 && (
                             <>
                                 <h2 className="section__title">
                                     <span className="icon">📷</span> Моменти разом
@@ -113,24 +193,34 @@ const App: React.FC = () => {
                             </>
                         ) }
 
-                        { i === 3 && (
+                        { i === 7 && (
                             <>
-                                <h2 className="section__title">А це твій подарунок</h2>
-                                <button className="button button--gift"
-                                        onClick={ () => togglePopup('/assets/images/gift.jpg') }>
-                                    Подивитися що там 🎁
-                                </button>
+                                <div className="box text-box">
+                                    <div className="text-box__text">
+                                        Кицюнь, я неймовірно тебе кохаю. <br/> Дякую що ти в мене є. <br/> З Днем
+                                        Народження!
+                                    </div>
+                                </div>
                             </>
                         ) }
 
-                        { i === 4 && (
+                        { i === 8 && (
                             <>
-                                <h2 className="section__title">Секція 5</h2>
+                                <h2 className="section__title">{ showJoke ? 'Ой, випадково не ту фотку завантажив' : 'А це твій подарунок' }</h2>
+                                <button className="button button--gift"
+                                        onClick={ () => {
+                                            togglePopup('/assets/images/edik/edik-1.jpg');
+                                            setTimeout(() => {
+                                                setShowJoke(true);
+                                            }, 500);
+                                        } }>
+                                    Peek inside 🎁
+                                </button>
                             </>
                         ) }
                     </div>
 
-                    { i < 4 && nextButtonCallback(i + 1) }
+                    { i < 8 && nextButtonCallback(i + 1) }
                 </section>
             )) }
 
@@ -142,7 +232,7 @@ const App: React.FC = () => {
 
             <div className="music">
                 <div className={ `music__tip ${ showTip ? 'music__tip--show' : '' }` }>
-                    <div className="music__tip-text">Alright, turn on the music and let's see what's going on here</div>
+                    <div className="music__tip-text">Вмикай музику і давай подивимося, що тут відбувається</div>
                     <img className="music__tip-arrow" src="/assets/images/arrows/arrow-1.png"/>
                 </div>
                 <button
