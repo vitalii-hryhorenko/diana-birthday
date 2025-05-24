@@ -16,6 +16,7 @@ const App: React.FC = () => {
     const [popupImage, setPopupImage] = useState<string | null>(null);
     const [popupVisible, setPopupVisible] = useState(false);
     const [showTip, setShowTip] = useState<boolean>(true);
+    const [visibleTipComponent, setVisibleTipComponent] = useState<boolean>(true);
     const [showJoke, setShowJoke] = useState<boolean>(false);
 
     const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -48,6 +49,12 @@ const App: React.FC = () => {
             </div>
         );
     }, []);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setVisibleTipComponent(showTip);
+        }, 500);
+    }, [showTip]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -248,10 +255,13 @@ const App: React.FC = () => {
             ) }
 
             <div className="music">
-                <div className={ `music__tip ${ showTip ? 'music__tip--show' : '' }` }>
-                    <div className="music__tip-text">Вмикай музику і давай подивимося, що тут відбувається</div>
-                    <img className="music__tip-arrow" src="/assets/images/arrows/arrow-1.png"/>
-                </div>
+                {
+                    visibleTipComponent &&
+                        <div className={ `music__tip ${ showTip ? 'music__tip--show' : '' }` }>
+                            <div className="music__tip-text">Вмикай музику і давай подивимося, що тут відбувається</div>
+                            <img className="music__tip-arrow" src="/assets/images/arrows/arrow-1.png"/>
+                        </div>
+                }
                 <button
                     className="music__button"
                     onClick={ () => {
