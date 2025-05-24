@@ -12,6 +12,7 @@ const IMAGES = [
 
 const App: React.FC = () => {
     const sectionRefs = useRef<(HTMLElement | null)[]>([]);
+    const scrollButtonRefs = useRef<(HTMLButtonElement | null)[]>([]); // New ref for scroll buttons
     const [popupImage, setPopupImage] = useState<string | null>(null);
     const [popupVisible, setPopupVisible] = useState(false);
     const [showTip, setShowTip] = useState<boolean>(true);
@@ -37,7 +38,11 @@ const App: React.FC = () => {
     const nextButtonCallback = useCallback((numberOfSection: number) => {
         return (
             <div className="section__scroll-button-container">
-                <button className="button button--scroll" onClick={ () => scrollToSection(numberOfSection) }>
+                <button
+                    className="button button--scroll"
+                    onClick={ () => scrollToSection(numberOfSection) }
+                    ref={ (el) => void (scrollButtonRefs.current[numberOfSection] = el) } // Assign ref to button
+                >
                     See what’s next
                 </button>
             </div>
@@ -45,25 +50,31 @@ const App: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        const confettiContainer = document.createElement('div');
-        confettiContainer.className = 'confetti-container';
-        document.body.appendChild(confettiContainer);
+        const handleScroll = () => {
+            scrollButtonRefs.current.forEach((button) => {
+                if (button) {
+                    const rect = button.getBoundingClientRect();
+                    const viewportHeight = window.innerHeight;
+                    const buttonTop = rect.top;
 
-        for (let i = 0; i < 80; i++) {
-            const confetti = document.createElement('div');
-            confetti.className = 'confetti';
-            confetti.style.left = `${ Math.random() * 100 }%`;
-            confetti.style.animationDelay = `${ Math.random() * 2 }s`;
-            confetti.style.setProperty('--i', Math.random().toString());
-            confettiContainer.appendChild(confetti);
-        }
+                    let opacity;
+                    if (buttonTop >= viewportHeight / 2) {
+                        const range = viewportHeight / 2;
+                        const progress = (buttonTop - viewportHeight / 2) / range;
+                        opacity = 0.1 + 0.9 * progress;
+                    } else {
+                        const range = viewportHeight / 2;
+                        const progress = buttonTop / range;
+                        opacity = 0.1 * progress;
+                    }
+                    button.style.opacity = Math.max(0, Math.min(1, opacity)).toString();
+                }
+            });
+        };
 
-        setTimeout(() => {
-            confettiContainer.classList.add('fade-out');
-            setTimeout(() => {
-                document.body.removeChild(confettiContainer);
-            }, 1000);
-        }, 4000);
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Run initially to set correct opacity
+        return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     useEffect(() => {
@@ -83,14 +94,14 @@ const App: React.FC = () => {
                     ref={ (el) => void (sectionRefs.current[i] = el) }
                     className={ `section section-${ i + 1 }` }
                 >
+                    { i === 0 && (
+                        <img
+                            src="/assets/images/background/background-1.png"
+                            alt="Background"
+                            className="section-1__background"
+                        />
+                    ) }
                     <div className="section__content">
-                        { i === 0 && (
-                            <img
-                                src="/assets/images/background/background-1.png"
-                                alt="Background"
-                                className="section-1__background"
-                            />
-                        ) }
                         { i === 1 && (
                             <>
                                 <div className="box text-box">
