@@ -1,4 +1,3 @@
-// App.tsx
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import './App.less';
 
@@ -85,11 +84,17 @@ const App: React.FC = () => {
                     className={ `section section-${ i + 1 }` }
                 >
                     <div className="section__content">
+                        { i === 0 && (
+                            <img
+                                src="/assets/images/background/background-1.png"
+                                alt="Background"
+                                className="section-1__background"
+                            />
+                        ) }
                         { i === 1 && (
                             <>
                                 <div className="box text-box">
                                     <div className="text-box__text">
-                                        For test
                                         Три роки тому цей день був для мене звичайним весняним днем: щебетали пташки, у
                                         саду
                                         розцвітали яблуні, а в чистому небі сяяло сонце, зігріваючи повітря своїми

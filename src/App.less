@@ -1,4 +1,3 @@
-// ЗМІННІ КОЛЬОРІВ
 @color-pink-light: #fde9f1;
 @color-pink-mid: rgba(250, 208, 234, 0.8);
 @color-pink-strong: #d882ff;
@@ -37,6 +36,7 @@ html, body {
     justify-content: space-between;
     padding: 20px;
     text-align: center;
+    position: relative;
 
     &__content {
         flex-grow: 1;
@@ -66,14 +66,21 @@ html, body {
     }
 }
 
-.section-1 {
-    background-image: url("../public/assets/images/background/background-1.png");
-    background-color: @color-yellow-light;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: min(80vh, 100%);
+
+
+.section-1__background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    max-height: 80vh;
+    max-width: 100%;
 }
+
+.section-1 { background-color: @color-yellow-light; }
 .section-2 { background: @color-pink-light; }
 .section-3 { background: @color-pink-mid; }
 .section-4 { background: white; }
@@ -112,7 +119,6 @@ html, body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     object-fit: cover;
 }
-
 
 .button {
     padding: 10px 20px;
